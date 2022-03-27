@@ -1,39 +1,25 @@
 # Chronicle::Github
+[![Gem Version](https://badge.fury.io/rb/chronicle-github.svg)](https://badge.fury.io/rb/chronicle-github)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/chronicle/github`. To experiment with that code, run `bin/console` for an interactive prompt.
+Extract your Github history using the command line with this plugin for [chronicle-etl](https://github.com/chronicle-app/chronicle-etl)
 
-TODO: Delete this and the text above, and describe your gem
+## Available Connectors
+### Extractors
+- `activity` - Extractor for a user's recent events
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'chronicle-github'
-```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install chronicle-github
+### Transformers
+- Pending
 
 ## Usage
 
-TODO: Write usage instructions here
+```sh
+# Install chronicle-etl and this plugin
+$ gem install chronicle-etl
+$ chronicle-etl connectors:install github
 
-## Development
+# You can get a Github personal access token from https://github.com/settings/tokens
+$ chronicle-etl secrets:set github access_token FOO123
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/chronicle-github. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/chronicle-github/blob/main/CODE_OF_CONDUCT.md).
-
-## Code of Conduct
-
-Everyone interacting in the Chronicle::Github project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/chronicle-github/blob/main/CODE_OF_CONDUCT.md).
+# Extract github events from the last 10 days
+$ chronicle-etl --extractor github:activity --since 10d
+```

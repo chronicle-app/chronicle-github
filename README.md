@@ -22,4 +22,8 @@ $ chronicle-etl secrets:set github access_token FOO123
 
 # Extract github events from the last 10 days
 $ chronicle-etl --extractor github:activity --since 10d
+
+# Get all repos starred in the last month
+$ chronicle-etl --extractor github:activity --loader json --since 1mo \
+    | jq -r 'select(.type == "WatchEvent") | .repo.name'
 ```

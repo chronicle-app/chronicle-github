@@ -5,9 +5,10 @@ module Chronicle
   module Github
     class ActivityExtractor < Chronicle::ETL::Extractor
       register_connector do |r|
-        r.provider = 'github'
-        r.description = 'user activity'
-        r.identifier = 'activity'
+        r.source = :github
+        r.type = :activity
+        r.strategy = :api
+        r.description = 'github activity'
       end
 
       setting :access_token, required: true
@@ -16,9 +17,6 @@ module Chronicle
       def prepare
         @client = ::Octokit::Client.new(access_token: @config.access_token)
         @access_token_owner = @client.user
-      end
-
-      def results_count
       end
 
       def extract
@@ -34,7 +32,7 @@ module Chronicle
 
           events.each do |event|
             count += 1
-            yield Chronicle::ETL::Extraction.new(data: event, meta: { user: @user})
+            yield build_extraction(data: event, meta: { user: @user })
           end
 
           break unless @client.last_response.rels[:next]
